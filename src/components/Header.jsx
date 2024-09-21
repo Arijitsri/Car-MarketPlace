@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Header() {
 
@@ -14,7 +15,9 @@ function Header() {
         </ul>
     
     <div>
+      <Link to = {'/profile'}>
         <button>Log in</button>
+      </Link>
     </div>
 
     </div>
