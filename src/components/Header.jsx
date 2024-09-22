@@ -16,6 +16,7 @@ function Header() {
     
     <div>
       <Link to = {'/profile'}>
+      {/* Submit hone per ya wala action hona chahie */}
         <button>Log in</button>
       </Link>
     </div>

@@ -9,12 +9,15 @@ import { Separator } from '@/components/ui/separator'
 import Featurs from '../components/Shared/Featurs.json'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from '@/components/ui/button'
+import { db } from './../../Configs'
+import { CarListing } from './../../Configs/schema'
 
 
 
 function AddListing() {
 
     const [formData,setFormData] = useState([]);
+    const [featuresData,setFeaturesData] = useState([]);
 
     const handleInputChange=(name,value)=>{
         setFormData((prevData)=>({
@@ -24,9 +27,30 @@ function AddListing() {
         console.log(formData);
     }
 
-    const onSubmit= (e)=>{
+    const handleFeatureChange=(name,value) => {
+        setFeaturesData((prevData) => ({
+            ...prevData,
+            [name]:value
+        }))
+        console.log(featuresData);
+    }
+
+    const onSubmit= async(e)=>{
         e.preventDefault();
         console.log(formData);
+
+        try{
+            const result = await db.insert(CarListing).values({
+                ...formData,
+                features:featuresData
+            });
+            if(result)
+            {
+                console.log("Data Saved")
+            }
+        }catch(e){
+            console.log("Error",e)
+        }
     }
 
   return (
@@ -58,7 +82,7 @@ function AddListing() {
                     <div className='grid grid-cols-2 md:grid-cols-3 gap-2'>
                         {Featurs.features.map((item,index)=>(
                             <div key={index} className='flex gap-2 items-center'>
-                                <Checkbox onCheckedChange={(value)=>handleInputChange(item.name,value)}/> <h2>{item.label}</h2>
+                                <Checkbox onCheckedChange={(value)=>handleFeatureChange(item.name,value)}/> <h2>{item.label}</h2>
                             </div>
                         ))}
                     </div>
