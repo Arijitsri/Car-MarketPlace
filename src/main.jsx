@@ -6,6 +6,7 @@ import Home from './Home'
 import Contact from './Contact' 
 import Profile from './assets/Profile/Profile'
 import AddListing from './Add-Listing'
+import { Toaster } from 'sonner'
 
 const router = createBrowserRouter([
   {
@@ -30,5 +31,6 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
    <StrictMode>
         <RouterProvider router={router} />
+        {/* <Toaster/> */}
     </StrictMode>,
 )

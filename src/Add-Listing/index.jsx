@@ -11,6 +11,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from '@/components/ui/button'
 import { db } from './../../Configs'
 import { CarListing } from './../../Configs/schema'
+import UploadImages from './Component/UploadImages'
+import { BiLoaderAlt } from "react-icons/bi";   
 
 
 
@@ -18,6 +20,9 @@ function AddListing() {
 
     const [formData,setFormData] = useState([]);
     const [featuresData,setFeaturesData] = useState([]);
+    const [triggerUploadImages,setTriggerUploadImages]=useState([]);
+    //const [loader,setLoader]=useState(false);
+    //const naviagte=useNavigate();
 
     const handleInputChange=(name,value)=>{
         setFormData((prevData)=>({
@@ -36,22 +41,26 @@ function AddListing() {
     }
 
     const onSubmit= async(e)=>{
+       // setLoader(true);
         e.preventDefault();
         console.log(formData);
-
+       // toast('Please Wait....')
         try{
             const result = await db.insert(CarListing).values({
                 ...formData,
                 features:featuresData
-            });
+            }).returning({id:CarListing.id});
             if(result)
             {
                 console.log("Data Saved")
+                setTriggerUploadImages(result[0]?.id);
+               // setLoader(false);
             }
         }catch(e){
             console.log("Error",e)
         }
     }
+    
 
   return (
     <div>
@@ -88,9 +97,11 @@ function AddListing() {
                     </div>
                 </div>
                 {/* Car Images */}
-
+                <Separator className='my-6'/>
+              
+                <UploadImages triggerUploadImages={triggerUploadImages}/>
                 <div className='mt-10 flex justify-end'> 
-                    <Button onClick={(e)=>onSubmit(e)}>Submit</Button>
+                    <Button type="button" onClick={(e)=>onSubmit(e)}>Submit</Button>
                 </div>
             </form>
         </div>

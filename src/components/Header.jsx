@@ -5,7 +5,7 @@ function Header() {
 
   return (
     <div className='flex justify-between items-center shadow-md p-5 font-bold'>
-        <img src='/logo.svg' width={50} height={100} />
+        <img src='/Logo1.jpg' width={50} height={100} class="rounded-full"/>
 
         <ul className='hidden md:flex gap-16'>
             <li className='font-bold hover:scale-105 translate-all cursor-pointer hover:text-primary'>Home</li>
